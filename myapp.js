@@ -17,7 +17,7 @@ var skycons = new Skycons();
   skycons.set("today", Skycons.PARTLY_CLOUDY_NIGHT);
 
 
-  $.getJSON("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22Taipei%20City%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys", function (data) {
+  $.getWeatherJSON("https://query.yahooapis.com/v1/public/yql?q=select%20*%20from%20weather.forecast%20where%20woeid%20in%20(select%20woeid%20from%20geo.places(1)%20where%20text%3D%22Taipei%20City%22)&format=json&env=store%3A%2F%2Fdatatables.org%2Falltableswithkeys", function (data) {
     var weather = tempFtoC(data.query.results.channel.item.condition.temp);
     $(".temperature").text(weather);
     $(".date").text(data.query.results.channel.item.forecast[0].date);
@@ -44,7 +44,7 @@ $('#dropdown li').on('click', function(){
     $("#city").text($(this).text());
 
     var url = cityUrl($(this).text().substr(0, 3));
-    $.getJSON(url, function (data) {
+    $.getWeatherJSON(url, function (data) {
       var weather = tempFtoC(data.query.results.channel.item.condition.temp);
       $(".temperature").text(weather);
       $(".date").text(data.query.results.channel.item.forecast[0].date);
